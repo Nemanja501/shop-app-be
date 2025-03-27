@@ -14,6 +14,8 @@ class Product extends Model
         'user_id'
     ];
 
+    public $timestamps = false;
+
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
