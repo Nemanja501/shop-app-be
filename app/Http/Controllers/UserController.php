@@ -40,7 +40,7 @@ class UserController extends Controller
     }
 
     public function getById(string $id) {
-        $user = User::where('id', $id)->first();
+        $user = User::with('products')->find($id);
         if(!$user) {
             return response()->json([
                 'error' => 'User not found'

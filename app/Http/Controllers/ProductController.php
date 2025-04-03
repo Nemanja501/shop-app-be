@@ -23,4 +23,17 @@ class ProductController extends Controller
             'message' => 'Product created successfully',
         ]);
     }
+
+    public function getById(string $id) {
+        $product = Product::with('user')->find($id);
+        if(!$product) {
+            return response()->json([
+                'error' => 'Product not found'
+            ], 404);
+        }
+        return response()->json([
+            'message' => 'Fetched product successfully',
+            'product' => $product
+        ]);
+    }
 }
