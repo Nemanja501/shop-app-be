@@ -36,4 +36,12 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
+
+    public function getAll() {
+        $products = Product::orderBy('created_at', 'DESC')->paginate(4);
+        return response()->json([
+            'message' => 'Fetched products successfully',
+            'products' => $products
+        ]);
+    }
 }
