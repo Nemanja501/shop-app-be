@@ -11,3 +11,4 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/user/{id}', [UserController::class, 'getById'])->middleware('auth:sanctum');
 Route::get('/product/{id}', [ProductController::class, 'getById'])->middleware('auth:sanctum');
 Route::post('/post-product', [ProductController::class, 'postProduct'])->middleware('auth:sanctum');
+Route::get('/search', [ProductController::class, 'search'])->middleware('auth:sanctum');

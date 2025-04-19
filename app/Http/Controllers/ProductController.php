@@ -44,4 +44,22 @@ class ProductController extends Controller
             'products' => $products
         ]);
     }
+
+    public function search(Request $request){
+        $searchQuery = '';
+        if($request->has('search')) {
+            $searchQuery = $request->input('search');
+        }
+        if($searchQuery) {
+            $products = Product::where('name', 'like', "%$searchQuery%")->paginate(4);
+            return response()->json([
+                'message' => 'Search successfull',
+                'products' => $products
+            ]);
+        }else {
+            return response()->json([
+                'message' => 'No search query present'
+            ]);
+        }
+    }
 }

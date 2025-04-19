@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -40,17 +41,18 @@ class UserController extends Controller
     }
 
     public function getById(string $id) {
-        $user = User::with(['products' => function ($q) {
-            $q->orderBy('created_at', 'DESC');
-        }])->find($id);
+        $user = User::find($id);
         if(!$user) {
             return response()->json([
                 'error' => 'User not found'
             ], 404);
         }
+        $products = Product::where('user_id', $id)->orderBy('created_at', 'DESC')->paginate(4);
+        if(!$products) $products = [];
         return response()->json([
             'message' => 'Fetched user successfully',
-            'user' => $user
+            'user' => $user,
+            'products' => $products
         ]);
     }
 }
